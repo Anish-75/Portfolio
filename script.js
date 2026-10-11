@@ -110,6 +110,12 @@ if ("IntersectionObserver" in window) {
 
         revealElements.forEach((element) => {
             element.classList.add("is-pending");
+
+            element.querySelectorAll(".timeline-entry, .project-card, .skill-list, .compact-card")
+                .forEach((card, index) => {
+                    card.style.setProperty("--reveal-delay", `${Math.min(index * 90, 360)}ms`);
+                });
+
             revealObserver.observe(element);
         });
     }
