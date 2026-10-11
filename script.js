@@ -6,7 +6,6 @@ const navMenu = document.querySelector("#nav-menu");
 const navLinks = Array.from(document.querySelectorAll(".nav-link"));
 const themeToggle = document.querySelector(".theme-toggle");
 const siteHeader = document.querySelector(".site-header");
-const colorSchemePreference = window.matchMedia("(prefers-color-scheme: light)");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
 function setTheme(theme, persist = false) {
@@ -14,7 +13,7 @@ function setTheme(theme, persist = false) {
     const isLight = theme === "light";
     themeToggle.setAttribute("aria-pressed", String(isLight));
     themeToggle.setAttribute("aria-label", `Switch to ${isLight ? "dark" : "light"} theme`);
-    themeColorMeta.setAttribute("content", isLight ? "#f8faff" : "#0b1220");
+    themeColorMeta.setAttribute("content", isLight ? "#f8faff" : "#080808");
 
     if (persist) {
         try {
@@ -44,18 +43,11 @@ const savedTheme = getSavedTheme();
 if (savedTheme === "light" || savedTheme === "dark") {
     setTheme(savedTheme);
 } else {
-    setTheme(colorSchemePreference.matches ? "light" : "dark");
+    setTheme("dark");
 }
 
-colorSchemePreference.addEventListener("change", (event) => {
-    const currentPreference = getSavedTheme();
-    if (currentPreference !== "light" && currentPreference !== "dark") {
-        setTheme(event.matches ? "light" : "dark");
-    }
-});
-
 themeToggle.addEventListener("click", () => {
-    const currentTheme = root.dataset.theme || (colorSchemePreference.matches ? "light" : "dark");
+    const currentTheme = root.dataset.theme || "dark";
     setTheme(currentTheme === "light" ? "dark" : "light", true);
 });
 
